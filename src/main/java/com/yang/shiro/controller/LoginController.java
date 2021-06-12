@@ -2,7 +2,7 @@ package com.yang.shiro.controller;
 
 import com.yang.shiro.entity.User;
 import com.yang.shiro.service.UserService;
-import com.yang.shiro.util.jwt.JwtUtils;
+import com.yang.shiro.config.shiro.jwt.JwtUtils;
 import com.yang.shiro.util.result.Result;
 import com.yang.shiro.util.result.ResultCode;
 import com.yang.shiro.vo.login.LoginRegisterVo;
@@ -56,6 +56,11 @@ public class LoginController {
         } catch (IncorrectCredentialsException ice) { // 账号与密码不匹配
             return Result.error(ResultCode.USER_LOGIN_ERROR);
         }
+    }
+
+    @PostMapping("/test")
+    public Result test(){
+        return Result.success("test");
     }
 
 }

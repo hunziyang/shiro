@@ -1,4 +1,4 @@
-package com.yang.shiro.util.jwt;
+package com.yang.shiro.config.shiro.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
@@ -19,7 +19,7 @@ public class JwtUtils {
     private static final long EXPIRE_TIME = 5 * 60 * 1000;
 
     // 私钥
-    private static String SECRET = "SECRET_YANG";
+    public static String SECRET = "SECRET_YANG";
 
     // 请求头
     public static final String AUTH_HEADER = "X-Authorization-With";
