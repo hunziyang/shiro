@@ -17,4 +17,7 @@
         <result property="updatedTime" column="UPDATED_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <select id="selectUserByPhone" resultMap="UserMap">
+        select * from user where PHONE = #{phone}
+    </select>
 </mapper>

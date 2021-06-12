@@ -1,9 +1,11 @@
 package com.yang.shiro.config.shiro;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,8 +48,13 @@ public class ShiroConfig {
 
     @Bean
     @Qualifier("passwordRealm")
-    public Realm realm(){
+    public Realm realm(@Value("${md5.iterations}")int iterations){
         SecurityRealm securityRealm =new SecurityRealm();
+        // 采用MD5加密
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName("MD5");
+        matcher.setHashIterations(iterations);
+        securityRealm.setCredentialsMatcher(matcher);
         return securityRealm;
     }
 }
