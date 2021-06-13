@@ -63,6 +63,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
+    @RequiresRoles("ADMIN")
     public Result logout(){
         Subject subject = SecurityUtils.getSubject();
         subject.logout();

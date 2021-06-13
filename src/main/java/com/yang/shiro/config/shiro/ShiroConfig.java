@@ -1,5 +1,6 @@
 package com.yang.shiro.config.shiro;
 
+import com.yang.shiro.config.shiro.cache.RedisCacheManager;
 import com.yang.shiro.config.shiro.jwt.JwtCredentialsMatcher;
 import com.yang.shiro.config.shiro.jwt.JwtFilter;
 import com.yang.shiro.config.shiro.jwt.JwtRealm;
@@ -122,6 +123,10 @@ public class ShiroConfig {
         CredentialsMatcher credentialsMatcher = new JwtCredentialsMatcher();
         // 设置加密次数
         jwtRealm.setCredentialsMatcher(credentialsMatcher);
+        // 将权限存入redis
+        jwtRealm.setCacheManager(new RedisCacheManager());
+        jwtRealm.setAuthorizationCachingEnabled(true);
+        jwtRealm.setAuthorizationCacheName("cache");
         return jwtRealm;
     }
 
