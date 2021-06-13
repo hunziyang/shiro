@@ -9,6 +9,8 @@ import com.yang.shiro.vo.login.LoginRegisterVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,6 +61,8 @@ public class LoginController {
     }
 
     @PostMapping("/test")
+    @RequiresRoles("ADMIN")
+    @RequiresPermissions("user:delete")
     public Result test(){
         return Result.success("test");
     }

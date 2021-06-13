@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yang.shiro.dao.PermMapper">
+
+    <resultMap type="com.yang.shiro.entity.Perm" id="PermMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="permName" column="PERM_NAME" jdbcType="VARCHAR"/>
+        <result property="permKey" column="PERM_KEY" jdbcType="VARCHAR"/>
+        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
+        <result property="revision" column="REVISION" jdbcType="INTEGER"/>
+        <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="UPDATED_BY" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="UPDATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectPremByPhone" resultMap="PermMap">
+        SELECT DISTINCT
+            p.PERM_NAME,
+            p.PERM_KEY
+        FROM
+            perm p
+            LEFT JOIN role_perm rp ON p.ID = rp.PID
+            LEFT JOIN role r ON r.ID = rp.RID
+            LEFT JOIN user_role ur ON ur.RID = r.ID
+            LEFT JOIN USER u ON u.ID = ur.UID
+        WHERE
+            u.PHONE = #{phone}
+        UNION
+        SELECT DISTINCT
+            p.PERM_NAME,
+            p.PERM_KEY
+        FROM
+            perm p
+            LEFT JOIN user_perm up ON p.ID = up.PID
+            LEFT JOIN USER u ON u.ID = up.UID
+        WHERE
+            u.PHONE = #{phone}
+    </select>
+</mapper>
