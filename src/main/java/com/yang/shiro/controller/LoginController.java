@@ -13,6 +13,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class LoginController {
      */
     @Autowired
     private UserService userService;
+    private RedisTemplate redisTemplate;
 
     @PostMapping("/register")
     public Result loginRegister(@RequestBody LoginRegisterVo loginRegisterVo) {
@@ -58,6 +60,13 @@ public class LoginController {
         } catch (IncorrectCredentialsException ice) { // 账号与密码不匹配
             return Result.error(ResultCode.USER_LOGIN_ERROR);
         }
+    }
+
+    @PostMapping("/logout")
+    public Result logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return Result.success();
     }
 
     @PostMapping("/test")

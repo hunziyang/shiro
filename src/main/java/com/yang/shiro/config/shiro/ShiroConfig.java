@@ -93,6 +93,11 @@ public class ShiroConfig {
         return sessionStorageEvaluator;
     }
 
+    /**
+     * 账号密码登录方式
+     * @param iterations
+     * @return
+     */
     @Bean
     @Qualifier("loginRealm")
     public Realm realm(@Value("${md5.iterations}")int iterations){
@@ -105,6 +110,10 @@ public class ShiroConfig {
         return securityRealm;
     }
 
+    /**
+     * jwt登录方式
+     * @return
+     */
     @Bean
     @Qualifier("jwtRealm")
     JwtRealm jwtRealm() {
