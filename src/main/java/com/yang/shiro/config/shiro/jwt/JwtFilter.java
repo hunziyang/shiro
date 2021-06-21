@@ -1,5 +1,6 @@
 package com.yang.shiro.config.shiro.jwt;
 
+import com.yang.shiro.util.result.ResultCode;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -114,7 +115,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setContentType("application/json;charset=UTF-8");
         httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         PrintWriter writer = httpResponse.getWriter();
-        writer.write("{\"errCode\": 401, \"msg\": \"UNAUTHORIZED\"}");
+        //验证失败反馈信息
+        writer.write("{\"code\": "+ ResultCode.UNAUTHORIZED.getCode() +", \"message\": \""+ResultCode.UNAUTHORIZED.getMessage()+"\"}");
         fillCorsHeader(WebUtils.toHttp(servletRequest), httpResponse);
         return false;
     }
